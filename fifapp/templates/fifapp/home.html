@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Equipo</title>
+</head>
+<body>
+    <h1>Crear Equipo</h1>
+    <form action="/crear_equipo/" method="post">
+        {% csrf_token %}
+        <label for="nombre_equipo">Nombre del equipo:</label>
+        <input type="text" id="nombre_equipo" name="nombre_equipo" required>
+        <br>
+        <label for="imagen_bandera">Imagen de la bandera (URL):</label>
+        <input type="url" id="imagen_bandera" name="imagen_bandera" required>
+        <br>
+        <label for="escudo_equipo">Escudo del equipo (URL):</label>
+        <input type="url" id="escudo_equipo" name="escudo_equipo" required>
+        <br>
+        <button type="submit">Crear equipo</button>
+    </form>
+
+     <!-- Lista de Equipos -->
+     <h2>Listado de Equipos</h2>
+     <ul>
+         {% for equipo in equipos %}
+             <li>
+                 <h3>{{ equipo.nombre }}</h3>
+                 <img src="{{ equipo.imagen_bandera.url }}" alt="Bandera de {{ equipo.nombre }}">
+                 <img src="{{ equipo.escudo_equipo.url }}" alt="Escudo de {{ equipo.nombre }}">
+             </li>
+         {% empty %}
+             <li>No hay equipos registrados.</li>
+         {% endfor %}
+     </ul>
+</body>
+</html>

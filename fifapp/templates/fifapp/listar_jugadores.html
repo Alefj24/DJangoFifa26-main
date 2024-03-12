@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Jugadores</title>
+</head>
+<body>
+    <h2>Listado de Jugadores</h2>
+    <ul>
+        {% for jugador in jugadores %}
+            <li>{{ jugador.nombre }} {{ jugador.apellido }} - {{ jugador.posicion }} - Titular: {% if jugador.titular %}Sí{% else %}No{% endif %}</li>
+        {% empty %}
+            <li>No hay jugadores registrados.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

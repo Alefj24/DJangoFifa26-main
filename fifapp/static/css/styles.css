@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+header {
+    background-color: #42008d;
+    color: white;
+    padding: 0.5px 10px;
+}
+
+nav {
+    background-color: #ddd;
+    padding: 0px 0;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+footer {
+    background-color: #210146;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+ul {
+    color:#210146;
+    background-color: #42008d;
+    text-decoration: none;
+}
+
