@@ -21,6 +21,8 @@
                 <a class="nav-link" href="#jugadores">Jugadores</a>
                 <a class="nav-link" href="#equipos">Equipos</a>
                 <a class="nav-link" href="#tecnico">Tecnicos</a>
+                <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+                <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
               </div>
             </div>
           </div>
@@ -68,42 +70,69 @@
     </nav>
     <section id="jugadores">
         <h2>Jugadores</h2>
-        <a href="{% url 'crear_jugador' %}" button>Agregar Jugadores</button>
-        <ul>
-            {% for jugador in jugadores %}
-                <li>{{ jugador.nombre }} {{ jugador.apellido }} - {{ jugador.posicion }} - Equipo: {{ jugador.equipo }}</li>
-            {% empty %}
-                <li>No hay jugadores registrados.</li>
-            {% endfor %}
-        </ul>
+        <a href="{% url 'crear_jugador' %}" class="btn btn-primary">Agregar Jugador</a>
+          {% for jugador in jugadores %}
+          <div class="card" style="width: 18rem;">
+                  <img src="{{ jugador.foto.url }}" class="card-img-top" alt="{{ jugador.nombre }} {{ jugador.apellido }}">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ jugador.nombre }} {{ jugador.apellido }}</h5>
+                    <p class="card-text">Fecha de Nacimiento: {{ jugador.fecha_nacimiento }}</p>
+                    <p class="card-text">Posición: {{ jugador.posicion.nombre }}</p>
+                    <p class="card-text">Número de camiseta: {{ jugador.numero_camiseta }}</p>
+                    <p class="card-text">Titular: {% if jugador.titular %} Sí {% else %} No {% endif %}</p>
+                    <p class="card-text">Equipo: {{ jugador.equipo.nombre }}</p>
+                  </div>
+                </div>
+                {% endfor %}
     </section>
-    <section id="equipos">
+      <section id="equipos">
         <h2>Equipos</h2>
-        <a href="{% url 'crear_equipo' %}" button>Agregar equipo</button>
-        <ul>
+          <a href="{% url 'crear_equipo' %}" class="btn btn-primary">Agregar equipo</a>
             {% for equipo in equipos %}
-                <li>{{ equipo.nombre }}</li>
-                <ul>
-                    {% for jugador in equipo.jugador_set.all %}
-                        <li>{{ jugador.nombre }} {{ jugador.apellido }} - {{ jugador.posicion }} - Titular: {% if jugador.titular %}Sí{% else %}No{% endif %}</li>
-                    {% endfor %}
-                </ul>
-            {% empty %}
-                <li>No hay equipos registrados.</li>
-            {% endfor %}
-        </ul>
+            <div class="card" style="width: 18rem;">
+              <img src="{{ equipo.imagen_bandera.url }}" class="card-img-top" alt="{{ equipo.nombre }} Bandera">
+              <div class="card-body">
+                  <h5 class="card-title">{{ equipo.nombre }}</h5>
+                  <img src="{{ equipo.escudo_equipo.url }}" class="card-img-top" alt="{{ equipo.nombre }} Escudo">
+                  <ul>
+                      {% for jugador in equipo.jugador_set.all %}
+                          <li>
+                              {{ jugador.nombre }} {{ jugador.apellido }} - {{ jugador.posicion }} - Titular: {% if jugador.titular %}Sí{% else %}No{% endif %}
+                          </li>
+                      {% empty %}
+                          <li>No hay jugadores registrados para este equipo.</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          </div>
+          {% empty %}
+              <p>No hay equipos registrados.</p>
+          {% endfor %}
+
     </section>
     <section id="tecnico">
         <h2>Técnicos</h2>
-        <a href="{% url 'crear_tecnico' %}" button>Agregar tecnico</button>
-    <ul>
-        {% for tecnico in tecnicos %}
-            <li>{{ tecnico.nombre }} {{ tecnico.apellido }} - {{ tecnico.rol }}</li>
-            
-        {% empty %}
-            <li>No hay técnicos registrados.</li>
-        {% endfor %}
-    </ul>
+        <div class="row mt-3">
+          {% for tecnico in tecnicos %}
+              <div class="col-md-4">
+                  <div class="card" style="width: 18rem;">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ tecnico.nombre }} {{ tecnico.apellido }}</h5>
+                          <p class="card-text">Rol: {{ tecnico.rol }}</p>
+                      </div>
+                  </div>
+              </div>
+          {% empty %}
+              <div class="col">
+                  <div class="card">
+                      <div class="card-body">
+                          <p class="card-text">No hay técnicos registrados.</p>
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+          
     </section>
     <footer>
         <p>© 2022 Página de Fútbol</p>

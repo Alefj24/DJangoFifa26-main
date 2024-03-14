@@ -2,9 +2,17 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #920000;
 }
 
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: indigo;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+    color: #fff;
+
+}
 .container {
     width: 80%;
     margin: 0 auto;
@@ -41,8 +49,8 @@ footer {
 }
 
 ul {
-    color:#210146;
-    background-color: #42008d;
+    color: silver;
+    background-color: #00788d;
     text-decoration: none;
 }
 

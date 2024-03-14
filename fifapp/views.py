@@ -1,27 +1,31 @@
 from django.shortcuts import render, redirect
-from .forms import EquipoForm, PosicionJuegoForm, TecnicoForm, JugadorForm
+from .forms import EquipoForm, PosicionJuegoForm, TecnicoForm, JugadorForm, LoginForm, CustomUserCreationForm
 from .models import Equipo, PosicionJuego, Tecnico, Jugador
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+
 
 def crear_equipo(request):
     if request.method == 'POST':
         form = EquipoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('index')  
     else:
         form = EquipoForm() 
     Equipos=Equipo.objects.all()
     return render(request, 'fifapp/crear_equipo.html', {'form': form, 'Equipos': Equipos})
 
 def home(request):
-    return render(request, 'fifapp/home.html')  
+    return render(request, 'fifapp/index.html')  
 
 def crear_posicion_juego(request):
     if request.method == 'POST':
         form = PosicionJuegoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('listar_posiciones_juego') 
+            return redirect('index') 
     else:
         form = PosicionJuegoForm()  
     return render(request, 'fifapp/crear_posicion_juego.html', {'form': form})
@@ -36,7 +40,7 @@ def crear_tecnico(request):
         form = TecnicoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('listar_tecnicos')
+            return redirect('index')
     else:
         form = TecnicoForm()
     return render(request, 'fifapp/crear_tecnico.html', {'form': form})
@@ -50,7 +54,7 @@ def crear_jugador(request):
         form = JugadorForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('listar_jugadores')
+            return redirect('index')
     else:
         form = JugadorForm()
     return render(request, 'fifapp/crear_jugador.html', {'form': form})
@@ -64,3 +68,36 @@ def index(request):
     jugadores = Jugador.objects.all()
     tecnicos = Tecnico.objects.all()
     return render(request, 'fifapp/index.html', {'equipos': equipos, 'jugadores': jugadores, 'tecnicos': tecnicos})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, username=cd['username'], password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('index')
+                else:
+                    return HttpResponse('Disabled account')
+            else:
+                return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+    return render(request, 'fifapp/login.html', {'form': form})
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'fifapp/register.html', {'form': form})
