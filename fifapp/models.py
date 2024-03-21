@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -18,8 +17,7 @@ class PosicionJuego(models.Model):
     def __str__(self):
         return self.nombre
 
-from django.db import models
-from .models import PosicionJuego
+
 
 class Jugador(models.Model):
     nombre = models.CharField(max_length=100)

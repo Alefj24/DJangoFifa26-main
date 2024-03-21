@@ -11,14 +11,12 @@ def crear_equipo(request):
         form = EquipoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('index')  
+            return redirect('crear_equipo')
     else:
-        form = EquipoForm() 
-    Equipos=Equipo.objects.all()
-    return render(request, 'fifapp/crear_equipo.html', {'form': form, 'Equipos': Equipos})
+        form = EquipoForm()
 
-def home(request):
-    return render(request, 'fifapp/index.html')  
+    equipos = Equipo.objects.all()  
+    return render(request, 'fifapp/crear_equipo.html', {'form': form, 'equipos': equipos})  
 
 def crear_posicion_juego(request):
     if request.method == 'POST':
@@ -40,28 +38,26 @@ def crear_tecnico(request):
         form = TecnicoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('crear_tecnico')
     else:
         form = TecnicoForm()
-    return render(request, 'fifapp/crear_tecnico.html', {'form': form})
 
-def listar_tecnicos(request):
     tecnicos = Tecnico.objects.all()
-    return render(request, 'fifapp/listar_tecnicos.html', {'tecnicos': tecnicos})
+    return render(request, 'fifapp/crear_tecnico.html', {'form': form, 'tecnicos': tecnicos})
+
 
 def crear_jugador(request):
     if request.method == 'POST':
         form = JugadorForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('crear_jugador')
     else:
         form = JugadorForm()
-    return render(request, 'fifapp/crear_jugador.html', {'form': form})
 
-def listar_jugadores(request):
-    jugadores = Jugador.objects.all()
-    return render(request, 'fifapp/listar_jugadores.html', {'jugadores': jugadores})
+    jugadores = Jugador.objects.all() 
+    return render(request, 'fifapp/crear_jugador.html', {'form': form, 'jugadores': jugadores})
+
 
 def index(request):
     equipos = Equipo.objects.all()

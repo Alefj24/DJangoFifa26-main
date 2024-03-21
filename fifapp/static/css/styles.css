@@ -6,16 +6,26 @@ body {
 }
 
 .bg-body-tertiary {
-    --bs-bg-opacity: 1;
-    background-color: indigo;
+    --bs-bg-opacity: 0;
 }
-.navbar-expand-lg .navbar-nav .nav-link {
-    color: #fff;
 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #a7a7a7;
+    color: #41008c;
 }
-.container {
-    width: 80%;
-    margin: 0 auto;
+
+.navbar a {
+    color: purple;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar a:hover {
+    background-color: #7964b4;
+    color: #333;
 }
 
 
@@ -49,8 +59,14 @@ footer {
 }
 
 ul {
-    color: silver;
-    background-color: #00788d;
+    color: black;
+    background-color: transparent;
     text-decoration: none;
 }
+
+ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
 
